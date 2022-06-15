@@ -8,8 +8,9 @@ func main() {
 	singleList := InitNewLinkedList()
 	singleList.AddToHead("80")
 	singleList.AddToHead("15")
-	// singleList.AddToHead("15")
-	singleList.AddToTail("15")
+	singleList.AddToHead("30")
+	singleList.AddToTail("10")
+	singleList.FindNode("10")
 	// fmt.Println(singleList.Head.Next.Data)
 
 }

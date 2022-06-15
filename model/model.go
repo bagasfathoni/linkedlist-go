@@ -55,6 +55,7 @@ func (sl *SingleLinkedList) AddToTail(inp string) {
 }
 
 func (sl *SingleLinkedList) checkSameValue(inp *Node) error {
+
 	current := sl.Head
 	for current.Next != nil {
 		if current.Data == inp.Data {
@@ -63,4 +64,18 @@ func (sl *SingleLinkedList) checkSameValue(inp *Node) error {
 		current = current.Next
 	}
 	return nil
+}
+
+func (sl *SingleLinkedList) FindNode(val string) {
+	current := sl.Head
+	if current.Data != val {
+		for current.Data != val {
+			current = current.Next
+		}
+		fmt.Println("there is a matched value")
+	} else if current.Data == val {
+		fmt.Println("there is a matched value")
+	} else {
+		fmt.Println("no matched value")
+	}
 }
