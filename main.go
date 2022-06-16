@@ -24,6 +24,8 @@ func main() {
 	*/
 	newList := model.AddAfterNode(*singleList, "15", "35")
 
+	newList.FindNode("15") // Find node with a value of "15"
+
 	// To view value of a node edit here.
 	/* Example :
 	First node --> list.Head.Data
