@@ -1,40 +1,91 @@
 package model
 
+import (
+	"errors"
+	"fmt"
+)
+
 type Node struct {
-	data string
-	next *Node
+	Data string
+	Next *Node
 }
 
 type SingleLinkedList struct {
-	size int
-	head *Node
+	Size int
+	Head *Node
 }
 
 func (sl *SingleLinkedList) AddToHead(inp string) {
 	newNode := &Node{
-		data: inp,
+		Data: inp,
 	}
-	if sl.head == nil {
-		sl.head = newNode
+	if sl.Head == nil {
+		sl.Head = newNode
 	} else {
-		newNode.next = sl.head
-		sl.head = newNode
-		sl.size++
+		err := sl.checkSameValue(newNode)
+		if err != nil {
+			fmt.Println(err.Error(), newNode.Data)
+			return
+		}
+		newNode.Next = sl.Head
+		sl.Head = newNode
+		sl.Size++
 	}
 }
 
 func (sl *SingleLinkedList) AddToTail(inp string) {
 	newNode := &Node{
-		data: inp,
+		Data: inp,
 	}
-	if sl.head == nil {
-		sl.head = newNode
+	if sl.Head == nil {
+		sl.Head = newNode
 	} else {
-		current := sl.head
-		for current.next != nil {
-			current = current.next
+		err := sl.checkSameValue(newNode)
+		if err != nil {
+			fmt.Println(err.Error(), newNode.Data)
+			return
 		}
-		current.next = newNode
+		current := sl.Head
+		for current.Next != nil {
+			current = current.Next
+		}
+		current.Next = newNode
 	}
-	sl.size++
+	sl.Size++
+}
+
+func (sl *SingleLinkedList) checkSameValue(inp *Node) error {
+	current := sl.Head
+	for current.Next != nil {
+		if current.Data == inp.Data {
+			return errors.New("can not enter a same value: ")
+		}
+		current = current.Next
+	}
+	return nil
+}
+
+func AddAfterNode(sl SingleLinkedList, after, input string) SingleLinkedList {
+	var newLinkedList SingleLinkedList
+	// var new Node
+	inputNode := &Node{
+		Data: input,
+	}
+	current := sl.Head
+	if current.Next == nil { // Linked list only have 1 value
+		current.Next = inputNode
+	}
+	if current.Next != nil { // Linked list have more than  1 value
+		for current.Data != after {
+			newLinkedList.AddToTail(current.Data)
+			current = current.Next
+		}
+		newLinkedList.AddToTail(current.Data)
+		newLinkedList.AddToTail(input)
+		for current.Next != nil {
+			newLinkedList.AddToTail(current.Next.Data)
+			current = current.Next
+		}
+	}
+	return newLinkedList
 }
