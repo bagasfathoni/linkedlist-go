@@ -64,3 +64,28 @@ func (sl *SingleLinkedList) checkSameValue(inp *Node) error {
 	}
 	return nil
 }
+
+func AddAfterNode(sl SingleLinkedList, after, input string) SingleLinkedList {
+	var newLinkedList SingleLinkedList
+	// var new Node
+	inputNode := &Node{
+		Data: input,
+	}
+	current := sl.Head
+	if current.Next == nil { // Linked list only have 1 value
+		current.Next = inputNode
+	}
+	if current.Next != nil { // Linked list have more than  1 value
+		for current.Data != after {
+			newLinkedList.AddToTail(current.Data)
+			current = current.Next
+		}
+		newLinkedList.AddToTail(current.Data)
+		newLinkedList.AddToTail(input)
+		for current.Next != nil {
+			newLinkedList.AddToTail(current.Next.Data)
+			current = current.Next
+		}
+	}
+	return newLinkedList
+}
